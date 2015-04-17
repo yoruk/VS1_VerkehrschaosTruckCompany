@@ -55,8 +55,7 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Spedition ist nicht mehr fuer den Laster zustaendig, muss aus Liste der Laster entfernt werden.
      * Wird von Streets aufgerufen */
 	public void leave(Truck truck) {
-		trucks_in_depot.remove(truck);
-		
+		removeTruck(truck);		
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Wird von Streets aufgerufen */
 	public void arrive(Truck truck) {
 		trucks_on_the_road.remove(truck);
-		trucks_in_depot.add(truck);
+		addTruck(truck);
 	}
 
 	@Override
