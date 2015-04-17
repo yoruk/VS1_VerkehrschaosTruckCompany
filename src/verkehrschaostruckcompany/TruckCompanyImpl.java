@@ -56,7 +56,7 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Wird von Streets aufgerufen */
 	public void leave(Truck truck) {
 		trucks_in_depot.remove(truck);
-		trucks_on_the_road.add(truck);
+		
 	}
 
 	@Override
@@ -66,6 +66,7 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Wird von Streets aufgerufen */
 	public void advise(Truck truck) {
 		truck.setCompany((TruckCompany)this);
+		trucks_on_the_road.add(truck);
 	}
 
 	@Override
