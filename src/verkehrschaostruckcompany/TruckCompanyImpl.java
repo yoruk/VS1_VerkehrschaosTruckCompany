@@ -1,5 +1,6 @@
 package verkehrschaostruckcompany;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,23 +12,26 @@ import verkehrschaos.TruckCompanyPOA;
 public class TruckCompanyImpl extends TruckCompanyPOA {
 	private String name;
 	private String location;
-	private Set<Truck> trucks_in_depot = new TreeSet<Truck>();
-	private Set<Truck> trucks_on_the_road = new TreeSet<Truck>();
+	private ArrayList<Truck> trucks_in_depot = new ArrayList<Truck>();
+	private ArrayList<Truck> trucks_on_the_road = new ArrayList<Truck>();
 	
 	public TruckCompanyImpl(String name, String location) {
 		super();
+		System.out.println("DEBUG: TruckCompanyImpl: TruckCompanyImpl(name, location)");
 		this.name = name;
 		this.location = location;
 	}
 	
 	public TruckCompanyImpl(String name) {
 		super();
+		System.out.println("DEBUG: TruckCompanyImpl: TruckCompanyImpl(name)");
 		this.name = name;
 	}
 	
 	@Override
 	/* Gibt den Namen der Spedition. */
 	public String getName() {
+		System.out.println("DEBUG: TruckCompanyImpl: getName()");
 		return name;
 	}
 
@@ -36,13 +40,16 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Damit ist die Spedition die dem LKW zugeordnete Spedition:
      */
 	public void addTruck(Truck truck) {
+		System.out.println("DEBUG: TruckCompanyImpl: addTruck()");
 		trucks_in_depot.add(truck);
+		//truck.setCompany((TruckCompany)this);
 	}
 
 	@Override
 	/* Entfernt den LKW von der Spedition
      */
 	public void removeTruck(Truck truck) {
+		System.out.println("DEBUG: TruckCompanyImpl: removeTruck()");
 		trucks_in_depot.remove(truck);
 	}
 
@@ -52,9 +59,16 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Rueckgabewert soll die Anzahl dieser LKWs angeben.
      */
 	public int getTrucks(TTruckListHolder trucks) {
-		trucks.value = (Truck[])this.trucks_in_depot.toArray();
+		System.out.println("DEBUG: TruckCompanyImpl: getTrucks()");
+		//trucks.value = (Truck[])this.trucks_in_depot.toArray();
+		trucks.value = new Truck[trucks_in_depot.size()];
 		
-		return this.trucks_in_depot.size();
+		for(int i = 0; i < trucks_in_depot.size(); i++) {
+			trucks.value[i] = trucks_in_depot.get(i);
+		}
+		
+		//return this.trucks_in_depot.size();
+		return trucks.value.length;
 	}
 
 	@Override
@@ -62,6 +76,7 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Spedition ist nicht mehr fuer den Laster zustaendig, muss aus Liste der Laster entfernt werden.
      * Wird von Streets aufgerufen */
 	public void leave(Truck truck) {
+		System.out.println("DEBUG: TruckCompanyImpl: leave()");
 		removeTruck(truck);		
 	}
 
@@ -71,6 +86,7 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Spedition soll den LKW sofort durch Aufruf von Truck.setCompany uebernehmen.
      * Wird von Streets aufgerufen */
 	public void advise(Truck truck) {
+		System.out.println("DEBUG: TruckCompanyImpl: advise()");
 		truck.setCompany((TruckCompany)this);
 		trucks_on_the_road.add(truck);
 	}
@@ -80,6 +96,7 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Steht nun fuer neue Fahrten zur Verfuegung.
      * Wird von Streets aufgerufen */
 	public void arrive(Truck truck) {
+		System.out.println("DEBUG: TruckCompanyImpl: arrive()");
 		trucks_on_the_road.remove(truck);
 		addTruck(truck);
 	}
@@ -93,6 +110,7 @@ public class TruckCompanyImpl extends TruckCompanyPOA {
      * Nach orb.shutdown kleine Pause einlegen (0.5 sec) um Exception zu vermeiden.
      */
 	public void putOutOfService() {
+		System.out.println("DEBUG: TruckCompanyImpl: outOutOfService()");
 		System.exit(0);
 	}
 
