@@ -10,8 +10,15 @@ import verkehrschaos.TruckCompanyPOA;
 
 public class TruckCompanyImpl extends TruckCompanyPOA {
 	private String name;
+	private String location;
 	private Set<Truck> trucks_in_depot = new TreeSet<Truck>();
 	private Set<Truck> trucks_on_the_road = new TreeSet<Truck>();
+	
+	public TruckCompanyImpl(String name, String location) {
+		super();
+		this.name = name;
+		this.location = location;
+	}
 	
 	public TruckCompanyImpl(String name) {
 		super();
